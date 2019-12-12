@@ -80,9 +80,21 @@ class TimeTracker extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      visibility: true
+      visibility: true,
+      time: new Date()
     };
     this.clickForViz = this.clickForViz.bind(this);
+  }
+  componentDidMount(){
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+  componentWillUnmount(){
+    clearInterval(this.timerID);
+  }
+  tick() {
+    this.setState({
+      time: new Date()
+    });
   }
   clickForViz() {
     this.setState (state => ({
@@ -95,7 +107,7 @@ class TimeTracker extends React.Component {
       <div>
         <button onClick={this.clickForViz}>Clock Block</button>
         <h2>Time Tracker</h2>
-        <Clock date={Date()} />
+          <h3>The time on deck is {this.state.time.toLocaleTimeString()}</h3>        
       </div>
       );
     }else{
@@ -108,8 +120,8 @@ class TimeTracker extends React.Component {
     
   };
 };
-const Clock = (props) => {
+/*const Clock = (props) => {
   return (<p>{props.date}</p>
     );
-};
+};<Clock date={Date()} />*/
 export default App;
