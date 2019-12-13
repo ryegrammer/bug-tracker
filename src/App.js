@@ -26,17 +26,35 @@ function App() {
   );
 }
 class IssueForm extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      issue_title: 'Too Much to Do!',
+      submit: ''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit (event) {
+    this.setState({
+      submit: this.state.issue_title
+    });
+  }
+  handleChange (event) {
+    this.setState ({
+      issue_title: event.target.value
+    });
+  }
   render() {
     return (
       <div>
-        <form>
-          <label for="issue_title">Issue Title:</label>
-          <input type="text" id="issue_title" value="Enter your word here."></input><br />
-          <label for="issue_text">Issue:</label>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="issue_title">Issue Title:</label>
+          <input type="text" id="issue_title" value={this.state.issue_title} onChange={this.handleChange.bind(this)}></input><br />
+          <label htmlFor="issue_text">Issue:</label>
           <input type="text" id="issue_text" value="Describe your problem"></input><br />
-          <label for="created_by">Created By:</label>
+          <label htmlFor="created_by">Created By:</label>
           <input type="text" id="created_by" value="Enter your word here."></input><br />
-          <label for="assigned_to">Request your worker:</label>
+          <label htmlFor="assigned_to">Request your worker:</label>
           <div>
             <select id="assigned_to" name="solutions">
               <option value="RA">Ryan Adams</option>
@@ -47,7 +65,7 @@ class IssueForm extends React.Component {
               <option value="Elon">Elon M.</option>
             </select>
           </div>
-          <label for="status_text" id="dropdown-label">Status</label>
+          <label htmlFor="status_text" id="dropdown-label">Status</label>
           <div>
             <select id="status_text" name="status_text">
               <option value="A1">Pre-Induction Screening</option>
@@ -61,7 +79,10 @@ class IssueForm extends React.Component {
               <option value="JC">JC - Job Complete</option>
             </select>
           </div>
+          <button type='submit'>Submit!</button>
         </form>
+        <h2>{this.state.submit}</h2>
+        <h2>{this.state.issue_title}</h2>
       </div>
     );
 
